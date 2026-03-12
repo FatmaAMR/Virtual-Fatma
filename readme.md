@@ -41,9 +41,9 @@ Le Project ID est visible dans la carte « Project info » du Dashboard.
 ### Cloner le projet et initialiser
 
 ```bash
-git clone https://github.com/weimeilin79/companion-python
-chmod +x ~/companion-python/*.sh
-cd ~/companion-python
+git clone https://github.com/axo47/companion-python-GDG.git
+chmod +x ~/companion-python-GDG/*.sh
+cd ~/companion-python-GDG
 ./init.sh                     # Entrer le Project ID quand demandé
 ```
 
@@ -57,8 +57,8 @@ gcloud services enable compute.googleapis.com aiplatform.googleapis.com
 ### Installer les dépendances et lancer le serveur écho
 
 ```bash
-cd ~/companion-python
-. ~/companion-python/set_env.sh
+cd ~/companion-python-GDG
+. ~/companion-python-GDG/set_env.sh
 python -m venv env
 source env/bin/activate
 pip install -r requirements.txt
@@ -83,7 +83,7 @@ On utilise deux terminaux en parallèle :
 ### Lancer le Gemini CLI
 
 ```bash
-cd ~/companion-python
+cd ~/companion-python-GDG
 clear
 gemini --yolo
 ```
@@ -216,7 +216,7 @@ Cette étape utilise un **serveur MCP local** et le **Gemini CLI** pour génére
 ```bash
 cd ~
 git clone https://github.com/weimeilin79/nano-banana-mcp
-source ~/companion-python/env/bin/activate
+source ~/companion-python-GDG/env/bin/activate
 cd ~/nano-banana-mcp
 pip install -r ~/nano-banana-mcp/requirements.txt
 python ~/nano-banana-mcp/mcp_server.py &> /dev/null &
@@ -254,8 +254,8 @@ generate lip sync images, with a high-quality digital illustration of an anime-s
 ### Relancer l'application
 
 ```bash
-cd ~/companion-python
-. ~/companion-python/set_env.sh
+cd ~/companion-python-GDG
+. ~/companion-python-GDG/set_env.sh
 source env/bin/activate
 python app.py
 ```
