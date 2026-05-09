@@ -4,12 +4,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const characterImage = document.getElementById('character-image');
     const voiceSelect = document.getElementById('voice-select');
     const status = document.getElementById('status');
+    const imageWrapper = document.querySelector('.character-image-wrapper');
 
-    const openMouthImg = '/static/images/char-mouth-open.png';
+    const openMouthImg = '/static/images/Gemini_Generated_Image_s947avs947avs947.png';
     const closedMouthImg = '/static/images/char-mouth-closed.png';
 
     let voices = [];
-    let lipSyncInterval;
+    let talkInterval = null;
+
+    function startTalking() {
+        if (talkInterval) return; 
+        talkInterval = setInterval(() => {
+            imageWrapper.classList.toggle('speaking');
+        }, 150); 
+    }
+
+    function stopTalking() {
+        clearInterval(talkInterval);
+        talkInterval = null;
+        imageWrapper.classList.remove('speaking');
+    }
 
     function populateVoiceList() {
         const allVoices = speechSynthesis.getVoices();
@@ -78,31 +92,25 @@ document.addEventListener('DOMContentLoaded', () => {
         if (speechSynthesis.speaking) {
             speechSynthesis.cancel();
         }
-        clearInterval(lipSyncInterval);
+        stopTalking();
 
         const utterance = new SpeechSynthesisUtterance(text);
-        const selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+        const selectedOption = voiceSelect.selectedOptions[0]?.getAttribute('data-name');
         const selectedVoice = voices.find(voice => voice.name === selectedOption);
         if (selectedVoice) {
             utterance.voice = selectedVoice;
         }
 
         utterance.onstart = () => {
-            let mouthOpen = true;
-            lipSyncInterval = setInterval(() => {
-                characterImage.src = mouthOpen ? openMouthImg : closedMouthImg;
-                mouthOpen = !mouthOpen;
-            }, 150);
+            startTalking();
         };
 
         utterance.onend = () => {
-            clearInterval(lipSyncInterval);
-            characterImage.src = closedMouthImg;
+            stopTalking();
         };
 
         utterance.onerror = () => {
-            clearInterval(lipSyncInterval);
-            characterImage.src = closedMouthImg;
+            stopTalking();
         };
 
         speechSynthesis.speak(utterance);

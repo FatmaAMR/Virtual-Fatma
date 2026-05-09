@@ -1,8 +1,13 @@
+import os
+
+os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "TRUE"
+os.environ["GOOGLE_CLOUD_PROJECT"] = "virtual-fatma"
+os.environ["GOOGLE_CLOUD_LOCATION"] = "us-central1"
+
 from flask import Flask, render_template, request, jsonify
 from google.adk.runners import InMemoryRunner
 from google.genai import types
 import asyncio
-import os
 
 app = Flask(__name__)
 
@@ -14,7 +19,7 @@ if character_exists:
     import character
     runner = InMemoryRunner(
         agent=character.root_agent,
-        app_name="Demo App",
+        app_name="V-Fatma",
     )
 
 adk_session = None
